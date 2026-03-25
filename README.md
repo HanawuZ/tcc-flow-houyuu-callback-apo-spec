@@ -19,17 +19,10 @@
 
 ## Contents
 
-1. [Overview](#overview)
-2. [Create Order](#1-create-order)
-3. [Update Order](#2-update-order)
-4. [Cancel Order](#3-cancel-order)
-5. [Update Order Status](#4-update-order-status)
-
----
-
-## Overview
-
-This document is intended for system developers who need to implement their own application and integrate data with the Houyuu OMS system using the provided API.
+1. [Create Order](#1-create-order)
+2. [Update Order](#2-update-order)
+3. [Cancel Order](#3-cancel-order)
+4. [Update Order Status](#4-update-order-status)
 
 ---
 
