@@ -1,4 +1,4 @@
-# FLOW-Houyuu OMS Integration API Specification
+# FLOW-store OMS Integration API Specification
 
 **Version:** 1.0  
 **© T.C.C. Technology Co. Ltd.**
@@ -41,7 +41,7 @@ This API is used to create a new order in the system. It should be called when a
 
 | Name | Type | Description | Required |
 |------|------|-------------|----------|
-| `store_code` | String | Store ID of the Houyuu branch. | Yes |
+| `store_code` | String | Store ID of the store branch. | Yes |
 
 ### Authorization
 
@@ -105,7 +105,7 @@ This API is used to create a new order in the system. It should be called when a
 
 | Name | Type | Description | Required |
 |------|------|-------------|----------|
-| `order_no` | String | Order number used by Houyuu to identify the order. | Yes |
+| `order_no` | String | Order number used by store to identify the order. | Yes |
 | `customer_code` | String | Customer code identifier. | Yes |
 | `order_items` | Array\<Object\> | List of order items. See [order_items](#nested-object-order_items-1). | Yes |
 | `discount_bill` | Number | Discount key applied to the entire bill. | No |
@@ -242,7 +242,7 @@ This API is used to update an existing order in the system. It allows the caller
 
 | Name | Type | Description | Required |
 |------|------|-------------|----------|
-| `store_code` | String | Store ID of the Houyuu branch. | Yes |
+| `store_code` | String | Store ID of the store branch. | Yes |
 
 ### Authorization
 
@@ -306,7 +306,7 @@ This API is used to update an existing order in the system. It allows the caller
 | Name | Type | Description | Required |
 |------|------|-------------|----------|
 | `customer_code` | String | Customer code identifier. | Yes |
-| `order_no` | String | Order number used by Houyuu to identify the order. | Yes |
+| `order_no` | String | Order number used by store to identify the order. | Yes |
 | `order_items` | Array\<Object\> | List of order items. See [order_items](#nested-object-order_items). | Yes |
 | `discount_bill` | Number | Discount key by user applied to the entire bill. | No |
 | `shipping_fee` | Number | Shipping fee for the order. | No |
@@ -445,7 +445,7 @@ This API is used to cancel an existing order in the system. It should be called 
 
 | Name | Type | Description | Required |
 |------|------|-------------|----------|
-| `store_code` | String | Store ID of the Houyuu branch. | Yes |
+| `store_code` | String | Store ID of the store branch. | Yes |
 
 ### Authorization
 
@@ -465,7 +465,7 @@ This API is used to cancel an existing order in the system. It should be called 
 
 | Name | Type | Description | Required |
 |------|------|-------------|----------|
-| `order_no` | String | Order number used by Houyuu to identify the order to cancel. | Yes |
+| `order_no` | String | Order number used by store to identify the order to cancel. | Yes |
 | `description` | String | Reason or note for the cancellation. | No |
 
 ### Response
@@ -535,7 +535,7 @@ This API is used to update the status of an existing order. It should be called 
 
 | Name | Type | Description | Required |
 |------|------|-------------|----------|
-| `store_code` | String | Store ID of the Houyuu branch. | Yes |
+| `store_code` | String | Store ID of the store branch. | Yes |
 
 ### Authorization
 
@@ -555,7 +555,7 @@ This API is used to update the status of an existing order. It should be called 
 
 | Name | Type | Description | Required |
 |------|------|-------------|----------|
-| `order_no` | String | Order number used by Houyuu to identify the order to update. | Yes |
+| `order_no` | String | Order number used by store to identify the order to update. | Yes |
 | `status` | Integer | Status code to apply to the order. | Yes |
 
 
@@ -626,7 +626,7 @@ This API is used to update the status of an existing order. It should be called 
 
 ## 5. Create Purchase Order
 
-This API is used to create a new purchase order in the system. It should be called when a Houyuu store wants to purchase SKUs from a distributor for resale. The `distributor_code` identifies the distributor, and `order_no` is used as a reference number for the purchase bill.
+This API is used to create a new purchase order in the system. It should be called when a store wants to purchase SKUs from a distributor for sale. The `distributor_code` identifies the distributor, and `order_no` is used as a reference number for the purchase bill.
 
 ### Request
 
@@ -638,7 +638,7 @@ This API is used to create a new purchase order in the system. It should be call
 
 | Name | Type | Description | Required |
 |------|------|-------------|----------|
-| `store_code` | String | Store ID of the Houyuu branch. | Yes |
+| `store_code` | String | Store ID of the store branch. | Yes |
 
 ### Authorization
 
