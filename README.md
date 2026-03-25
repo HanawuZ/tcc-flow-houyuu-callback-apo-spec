@@ -35,7 +35,7 @@ This API is used to create a new order in the system. It should be called when a
 
 | Method | URL |
 |--------|-----|
-| `POST` | `$api_url/api/v1/external/houyuu/order` |
+| `POST` | `$api_url/api/v1/external/order` |
 
 ### Query Parameters
 
@@ -236,7 +236,7 @@ This API is used to update an existing order in the system. It allows the caller
 
 | Method | URL |
 |--------|-----|
-| `PUT` | `$api_url/api/v1/external/houyuu/order` |
+| `PUT` | `$api_url/api/v1/external/order` |
 
 ### Query Parameters
 
@@ -439,7 +439,7 @@ This API is used to cancel an existing order in the system. It should be called 
 
 | Method | URL |
 |--------|-----|
-| `POST` | `$api_url/api/v1/external/houyuu/order/cancel` |
+| `POST` | `$api_url/api/v1/external/order/cancel` |
 
 ### Query Parameters
 
@@ -529,7 +529,7 @@ This API is used to update the status of an existing order. It should be called 
 
 | Method | URL |
 |--------|-----|
-| `PUT` | `$api_url/api/v1/external/houyuu/order/status` |
+| `PUT` | `$api_url/api/v1/external/order/status` |
 
 ### Query Parameters
 
@@ -551,6 +551,14 @@ This API is used to update the status of an existing order. It should be called 
 }
 ```
 
+### Parameters
+
+| Name | Type | Description | Required |
+|------|------|-------------|----------|
+| `order_no` | String | Order number used by Houyuu to identify the order to update. | Yes |
+| `status` | Integer | Status code to apply to the order. | Yes |
+
+
 ### Order Status Reference
 
 | Code | Status (TH) | Status (EN) |
@@ -560,15 +568,8 @@ This API is used to update the status of an existing order. It should be called 
 | `4` | จัดส่งแล้ว | Shipped |
 | `5` | สำเร็จ | Completed |
 | `6` | ยกเลิกโดยแอดมิน | Cancelled by Admin |
-| `6` | ยกเลิกโดยผู้ซื้อ | Cancelled by Buyer |
+| `7` | ยกเลิกโดยผู้ซื้อ | Cancelled by Buyer |
 
-
-### Parameters
-
-| Name | Type | Description | Required |
-|------|------|-------------|----------|
-| `order_no` | String | Order number used by Houyuu to identify the order to update. | Yes |
-| `status` | Integer | Status code to apply to the order. | Yes |
 
 ### Response
 
@@ -631,7 +632,7 @@ This API is used to create a new purchase order in the system. It should be call
 
 | Method | URL |
 |--------|-----|
-| `POST` | `$api_url/api/v1/external/houyuu/purchase-order` |
+| `POST` | `$api_url/api/v1/external/logistics/purchase-orders` |
 
 ### Query Parameters
 
@@ -648,44 +649,73 @@ This API is used to create a new purchase order in the system. It should be call
 ### Request Body
 ```json
 {
-    "order_no": "REF-HOU2026031200001",
-    "distributor_code": "DISTRIBUTOR_CODE_1",
-    "order_items": [
+    "salesOrderId": "REF-HOU2026031200001",
+    "deliveryOrderId": "REF-HOU2026031200001",
+    "orderCreationDate": "2026-03-25T08:00:00+07:00",
+    "type": "dms",
+    "distributorCode": "D001",
+    "soldToPartyCode": "00000009",
+    "shipToPartyCode": "00000009",
+    "shipToLocationName": "Address of HOU",
+    "description": "Purchase order for Q1 restock.",
+    "earliestAllowedDeliveryDate": "2026-03-26T00:00:00+07:00",
+    "deliveryDueDate": "2026-03-30T00:00:00+07:00",
+    "orderStatus": 1,
+    "items": [
         {
-            "sku": "8851707000808",
-            "barcode": "18851707000805",
-            "quantity": 2,
-            "seq": 1,
-            "warehouse": "01"
+            "productCode": "8851707000808",
+            "orderedQuantity": 10,
+            "deliveredQuantity": 0,
+            "remainingQuantity": 0
         },
         {
-            "sku": "8851707000181",
-            "barcode": "18851707000188",
-            "quantity": 10,
-            "seq": 2,
-            "warehouse": "01"
+            "productCode": "8851707000181",
+            "orderedQuantity": 5,
+            "deliveredQuantity": 0,
+            "remainingQuantity": 0
         }
     ]
 }
 ```
 
+
 ### Parameters
 
 | Name | Type | Description | Required |
 |------|------|-------------|----------|
-| `order_no` | String | Reference number used to identify the purchase bill. | Yes |
-| `distributor_code` | String | Code of the distributor the store wants to purchase SKUs from for selling. | Yes |
-| `order_items` | Array\<Object\> | List of items to purchase. See [order_items](#nested-object-order_items-5). | Yes |
+| `salesOrderId` | String | Reference number used to identify the purchase bill. | Yes |
+| `deliveryOrderId` | String | Delivery order identifier associated with the purchase. Can send the same value as `salesOrderId`. | Yes |
+| `orderCreationDate` | String (datetime) | Date and time the order was created (RFC 3339 format). | Yes |
+| `type` | String | Type of the purchase order. Send `dms` for distributor management system orders. | No |
+| `distributorCode` | String | Code of the distributor supplying the goods. | No |
+| `soldToPartyCode` | String | Store code placing the purchase order (same as store_code query param). | Yes |
+| `shipToPartyCode` | String | Code of the store location receiving the goods. | Yes |
+| `shipToLocationName` | String | Address or name of the store location receiving the goods. | Yes |
+| `description` | String | Additional notes or description for the order. | No |
+| `earliestAllowedDeliveryDate` | String (datetime) | Earliest date the delivery is allowed (RFC 3339 format). | Yes |
+| `deliveryDueDate` | String (datetime) | Due date for the delivery (RFC 3339 format). | Yes |
+| `orderStatus` | Integer | Status of the purchase order. See [Order Status Reference](#order-status-reference-1). | Yes |
+| `items` | Array\<Object\> | List of items in the purchase order. See [items](#nested-object-items). | Yes |
 
-### Nested Object: order_items
+### Order Status Reference
+
+| Code | Status (TH) | Status (EN) |
+|------|-------------|-------------|
+| `1` | รอดำเนินการ | Waiting to Confirm |
+| `3` | รอจัดส่ง | Ready to Ship |
+| `4` | จัดส่งแล้ว | Shipped |
+| `5` | สำเร็จ | Completed |
+| `6` | ยกเลิกโดยแอดมิน | Cancelled by Admin |
+
+
+### Nested Object: items
 
 | Name | Type | Description | Required |
 |------|------|-------------|----------|
-| `sku` | String | SKU code of the product. | Yes |
-| `barcode` | String | Barcode of the product. | Yes |
-| `quantity` | Integer | Quantity to purchase. | Yes |
-| `seq` | Integer | Sequence number of the item in the purchase order. | Yes |
-| `warehouse` | String | Warehouse code for the item. | Yes |
+| `productCode` | String | Barcode of the product item. | Yes |
+| `orderedQuantity` | Integer | Total quantity ordered. | Yes |
+| `deliveredQuantity` | Integer | Quantity already delivered. If no value, send `0`. | No |
+| `remainingQuantity` | Integer | Remaining quantity yet to be delivered. If no value, send `0`. | No |
 
 ### Response
 
@@ -711,15 +741,53 @@ This API is used to create a new purchase order in the system. It should be call
 ```json
 {
   "error": true,
-  "message": "Validation failed.",
+  "message": "Validation failed for one or more orders.",
   "errors": [
     {
-      "field": "order_no",
-      "message": "order_no is required."
+      "orderIndex": 0,
+      "orderFields": [
+        {
+          "field": "salesOrderId",
+          "message": "Sale order ID is required."
+        },
+        {
+          "field": "soldToPartyCode",
+          "message": "Sold-to party code is required."
+        },
+        {
+          "field": "deliveryDueDate",
+          "message": "Delivery due date is required."
+        },
+        {
+          "field": "orderStatus",
+          "message": "Invalid order status number."
+        }
+      ],
+      "itemErrors": [
+        {
+          "itemIndex": 0,
+          "fields": [
+            {
+              "field": "productCode",
+              "message": "Product code is required."
+            },
+            {
+              "field": "orderedQuantity",
+              "message": "Ordered quantity cannot be negative."
+            }
+          ]
+        }
+      ]
     },
     {
-      "field": "distributor_code",
-      "message": "distributor_code is required."
+      "orderIndex": 2,
+      "orderFields": [
+        {
+          "field": "items",
+          "message": "Order items cannot be empty."
+        }
+      ],
+      "itemErrors": []
     }
   ]
 }
