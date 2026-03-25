@@ -23,6 +23,7 @@
 2. [Update Order](#2-update-order)
 3. [Cancel Order](#3-cancel-order)
 4. [Update Order Status](#4-update-order-status)
+5. [Create Purchase Order](#5-create-purchase-order)
 
 ---
 
@@ -36,6 +37,12 @@ This API is used to create a new order in the system. It should be called when a
 |--------|-----|
 | `POST` | `$api_url/api/v1/external/houyuu/order` |
 
+### Query Parameters
+
+| Name | Type | Description | Required |
+|------|------|-------------|----------|
+| `store_code` | String | Store ID of the Houyuu branch. | Yes |
+
 ### Authorization
 
 | Type | Value | Header Key |
@@ -45,7 +52,7 @@ This API is used to create a new order in the system. It should be called when a
 ### Request Body
 ```json
 {
-    "order_no": "TUAT2026031200001",
+    "order_no": "REF-HOU4728301956",
     "customer_code": "00000009",
     "order_items": [
         {
@@ -98,7 +105,7 @@ This API is used to create a new order in the system. It should be called when a
 
 | Name | Type | Description | Required |
 |------|------|-------------|----------|
-| `order_no` | String | Unique order number. | Yes |
+| `order_no` | String | Order number used by Houyuu to identify the order. | Yes |
 | `customer_code` | String | Customer code identifier. | Yes |
 | `order_items` | Array\<Object\> | List of order items. See [order_items](#nested-object-order_items-1). | Yes |
 | `discount_bill` | Number | Discount key applied to the entire bill. | No |
@@ -231,6 +238,12 @@ This API is used to update an existing order in the system. It allows the caller
 |--------|-----|
 | `PUT` | `$api_url/api/v1/external/houyuu/order` |
 
+### Query Parameters
+
+| Name | Type | Description | Required |
+|------|------|-------------|----------|
+| `store_code` | String | Store ID of the Houyuu branch. | Yes |
+
 ### Authorization
 
 | Type | Value | Header Key |
@@ -261,7 +274,7 @@ This API is used to update an existing order in the system. It allows the caller
             "is_free": true
         }
     ],
-    "order_no": "TUAT2026031200001",
+    "order_no": "REF-HOU4728301956",
     "discount_bill": 0,
     "shipping_fee": 0,
     "shipping_address": {
@@ -293,7 +306,7 @@ This API is used to update an existing order in the system. It allows the caller
 | Name | Type | Description | Required |
 |------|------|-------------|----------|
 | `customer_code` | String | Customer code identifier. | Yes |
-| `order_no` | String | Order number. | Yes |
+| `order_no` | String | Order number used by Houyuu to identify the order. | Yes |
 | `order_items` | Array\<Object\> | List of order items. See [order_items](#nested-object-order_items). | Yes |
 | `discount_bill` | Number | Discount key by user applied to the entire bill. | No |
 | `shipping_fee` | Number | Shipping fee for the order. | No |
@@ -428,6 +441,12 @@ This API is used to cancel an existing order in the system. It should be called 
 |--------|-----|
 | `POST` | `$api_url/api/v1/external/houyuu/order/cancel` |
 
+### Query Parameters
+
+| Name | Type | Description | Required |
+|------|------|-------------|----------|
+| `store_code` | String | Store ID of the Houyuu branch. | Yes |
+
 ### Authorization
 
 | Type | Value | Header Key |
@@ -437,7 +456,7 @@ This API is used to cancel an existing order in the system. It should be called 
 ### Request Body
 ```json
 {
-  "order_no": "TUAT2026031200001",
+  "order_no": "REF-HOU4728301956",
   "description": "Customer requested cancellation."
 }
 ```
@@ -446,7 +465,7 @@ This API is used to cancel an existing order in the system. It should be called 
 
 | Name | Type | Description | Required |
 |------|------|-------------|----------|
-| `order_no` | String | Order number to cancel. | Yes |
+| `order_no` | String | Order number used by Houyuu to identify the order to cancel. | Yes |
 | `description` | String | Reason or note for the cancellation. | No |
 
 ### Response
@@ -512,6 +531,12 @@ This API is used to update the status of an existing order. It should be called 
 |--------|-----|
 | `PUT` | `$api_url/api/v1/external/houyuu/order/status` |
 
+### Query Parameters
+
+| Name | Type | Description | Required |
+|------|------|-------------|----------|
+| `store_code` | String | Store ID of the Houyuu branch. | Yes |
+
 ### Authorization
 
 | Type | Value | Header Key |
@@ -521,7 +546,7 @@ This API is used to update the status of an existing order. It should be called 
 ### Request Body
 ```json
 {
-  "order_no": "TUAT2026031200001",
+  "order_no": "REF-HOU4728301956",
   "status": 1
 }
 ```
@@ -542,7 +567,7 @@ This API is used to update the status of an existing order. It should be called 
 
 | Name | Type | Description | Required |
 |------|------|-------------|----------|
-| `order_no` | String | Order number to update. | Yes |
+| `order_no` | String | Order number used by Houyuu to identify the order to update. | Yes |
 | `status` | Integer | Status code to apply to the order. | Yes |
 
 ### Response
@@ -596,5 +621,124 @@ This API is used to update the status of an existing order. It should be called 
 }
 ```
 
+---
+
+## 5. Create Purchase Order
+
+This API is used to create a new purchase order in the system. It should be called when a Houyuu store wants to purchase SKUs from a distributor for resale. The `distributor_code` identifies the distributor, and `order_no` is used as a reference number for the purchase bill.
+
+### Request
+
+| Method | URL |
+|--------|-----|
+| `POST` | `$api_url/api/v1/external/houyuu/purchase-order` |
+
+### Query Parameters
+
+| Name | Type | Description | Required |
+|------|------|-------------|----------|
+| `store_code` | String | Store ID of the Houyuu branch. | Yes |
+
+### Authorization
+
+| Type | Value | Header Key |
+|------|-------|------------|
+| JWT Token | `Bearer $token` | `Authorization` |
+
+### Request Body
+```json
+{
+    "order_no": "REF-HOU2026031200001",
+    "distributor_code": "DISTRIBUTOR_CODE_1",
+    "order_items": [
+        {
+            "sku": "8851707000808",
+            "barcode": "18851707000805",
+            "quantity": 2,
+            "seq": 1,
+            "warehouse": "01"
+        },
+        {
+            "sku": "8851707000181",
+            "barcode": "18851707000188",
+            "quantity": 10,
+            "seq": 2,
+            "warehouse": "01"
+        }
+    ]
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Required |
+|------|------|-------------|----------|
+| `order_no` | String | Reference number used to identify the purchase bill. | Yes |
+| `distributor_code` | String | Code of the distributor the store wants to purchase SKUs from for selling. | Yes |
+| `order_items` | Array\<Object\> | List of items to purchase. See [order_items](#nested-object-order_items-5). | Yes |
+
+### Nested Object: order_items
+
+| Name | Type | Description | Required |
+|------|------|-------------|----------|
+| `sku` | String | SKU code of the product. | Yes |
+| `barcode` | String | Barcode of the product. | Yes |
+| `quantity` | Integer | Quantity to purchase. | Yes |
+| `seq` | Integer | Sequence number of the item in the purchase order. | Yes |
+| `warehouse` | String | Warehouse code for the item. | Yes |
+
+### Response
+
+| Status | Reason | Description |
+|--------|--------|-------------|
+| 201 | Created | Purchase order created successfully. |
+| 400 | Bad Request | The request body is malformed, missing required fields, or contains invalid values. |
+| 401 | Unauthorized | The JWT token is missing, expired, or invalid. |
+| 500 | Internal Server Error | An unexpected error occurred on the server. |
+
+### Examples
+
+**Success (201)**
+```json
+{
+  "error": false,
+  "message": "Purchase order created successfully.",
+  "errors": []
+}
+```
+
+**Invalid request body (400)**
+```json
+{
+  "error": true,
+  "message": "Validation failed.",
+  "errors": [
+    {
+      "field": "order_no",
+      "message": "order_no is required."
+    },
+    {
+      "field": "distributor_code",
+      "message": "distributor_code is required."
+    }
+  ]
+}
+```
+
+**Unauthorized (401)**
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+**Internal server error (500)**
+```json
+{
+  "error": true,
+  "message": "$error_message",
+  "errors": []
+}
+```
 
 *© T.C.C. Technology Co. Ltd.*
