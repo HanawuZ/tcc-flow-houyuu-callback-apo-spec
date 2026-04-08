@@ -56,20 +56,16 @@ This API is used to create a new order in the system. It should be called when a
     "customer_code": "00000009",
     "order_items": [
         {
-            "sku": "8851707000808",
             "barcode": "18851707000805",
             "quantity": 2,
             "seq": 1,
-            "warehouse": "01",
             "key_discount": 0,
             "is_free": false
         },
         {
-            "sku": "8851707000181",
             "barcode": "18851707000188",
             "quantity": 10,
             "seq": 2,
-            "warehouse": "01",
             "key_discount": 0,
             "is_free": true
         }
@@ -87,16 +83,6 @@ This API is used to create a new order in the system. It should be called when a
         "phone_1": "0812345678",
         "phone_2": "0898765432"
     },
-    "tax_address": {
-        "tax_id": "0105556012345",
-        "address": "456 Tax Road",
-        "sub_district": "Khlong Toei",
-        "district": "Khlong Toei",
-        "province": "Bangkok",
-        "zipcode": "10110",
-        "phone_1": "0812345678",
-        "phone_2": "0898765432"
-    },
     "coupon_code": null
 }
 ```
@@ -110,19 +96,16 @@ This API is used to create a new order in the system. It should be called when a
 | `order_items` | Array\<Object\> | List of order items. See [order_items](#nested-object-order_items-1). | Yes |
 | `discount_bill` | Number | Discount key applied to the entire bill. | No |
 | `shipping_fee` | Number | Shipping fee for the order. | No |
-| `shipping_address` | Object | Shipping destination details. See [shipping_address](#nested-object-shipping_address-1). | Yes |
-| `tax_address` | Object | Tax invoice address details. See [tax_address](#nested-object-tax_address-1). | No |
+| `shipping_address` | Object | Shipping destination details. See [shipping_address](#nested-object-shipping_address-1). | No |
 | `coupon_code` | String | Coupon code to apply to the order. | No |
 
 ### Nested Object: order_items
 
 | Name | Type | Description | Required |
 |------|------|-------------|----------|
-| `sku` | String | SKU code of the product. | Yes |
 | `barcode` | String | Barcode of the product. | Yes |
 | `quantity` | Integer | Quantity of the product. | Yes |
 | `seq` | Integer | Sequence number of the item in the order. | Yes |
-| `warehouse` | String | Warehouse code for the item. | Yes |
 | `key_discount` | Number | Discount key applied to the item. If no discount, set to `0`. | No |
 | `is_free` | Boolean | Indicates whether the item is a free item inserted manually. | Yes |
 
@@ -140,18 +123,6 @@ This API is used to create a new order in the system. It should be called when a
 | `phone_1` | String | Primary contact phone number for shipping. | Yes |
 | `phone_2` | String | Secondary contact phone number for shipping. | No |
 
-### Nested Object: tax_address
-
-| Name | Type | Description | Required |
-|------|------|-------------|----------|
-| `tax_id` | String | Tax identification number. | Yes |
-| `address` | String | Street address for tax invoice. | Yes |
-| `sub_district` | String | Sub-district of the tax address. | Yes |
-| `district` | String | District of the tax address. | Yes |
-| `province` | String | Province of the tax address. | Yes |
-| `zipcode` | String | Zip code of the tax address. | Yes |
-| `phone_1` | String | Primary contact phone number for tax invoice. | Yes |
-| `phone_2` | String | Secondary contact phone number for tax invoice. | No |
 
 ### Response
 
@@ -373,20 +344,16 @@ This API is used to update an existing order in the system. It allows the caller
     "customer_code": "00000009",
     "order_items": [
         {
-            "sku": "8851707000808",
             "barcode": "18851707000805",
             "quantity": 2,
             "seq": 1,
-            "warehouse": "01",
             "key_discount": 0,
             "is_free": false
         },
         {
-            "sku": "8851707000181",
             "barcode": "18851707000188",
             "quantity": 10,
             "seq": 2,
-            "warehouse": "01",
             "key_discount": 0,
             "is_free": true
         }
@@ -404,16 +371,6 @@ This API is used to update an existing order in the system. It allows the caller
         "longitude": "100.564834",
         "phone_1": "0812345678",
         "phone_2": "0898765432"
-    },
-    "tax_address": {
-        "tax_id": "0105556012345",
-        "address": "456 Tax Road",
-        "sub_district": "Khlong Toei",
-        "district": "Khlong Toei",
-        "province": "Bangkok",
-        "zipcode": "10110",
-        "phone_1": "0812345678",
-        "phone_2": "0898765432"
     }
 }
 ```
@@ -427,18 +384,15 @@ This API is used to update an existing order in the system. It allows the caller
 | `order_items` | Array\<Object\> | List of order items. See [order_items](#nested-object-order_items). | Yes |
 | `discount_bill` | Number | Discount key by user applied to the entire bill. | No |
 | `shipping_fee` | Number | Shipping fee for the order. | No |
-| `shipping_address` | Object | Shipping destination details. See [shipping_address](#nested-object-shipping_address). | Yes |
-| `tax_address` | Object | Tax invoice address details. See [tax_address](#nested-object-tax_address). | No |
+| `shipping_address` | Object | Shipping destination details. See [shipping_address](#nested-object-shipping_address). | No |
 
 ### Nested Object: order_items
 
 | Name | Type | Description | Required |
 |------|------|-------------|----------|
-| `sku` | String | SKU code of the product. | Yes |
 | `barcode` | String | Barcode of the product. | Yes |
 | `quantity` | Integer | Quantity of the product. | Yes |
 | `seq` | Integer | Sequence number of the item in the order. | Yes |
-| `warehouse` | String | Warehouse code for the item. | Yes |
 | `key_discount` | Number | Discount key applied to the item. If no discount, set to `0`. | No |
 | `is_free` | Boolean | Indicates whether the item is a free item. In case user want to insert free item manually. | Yes |
 
@@ -456,18 +410,6 @@ This API is used to update an existing order in the system. It allows the caller
 | `phone_1` | String | Primary contact phone number for shipping. | Yes |
 | `phone_2` | String | Secondary contact phone number for shipping. | No |
 
-### Nested Object: tax_address
-
-| Name | Type | Description | Required |
-|------|------|-------------|----------|
-| `tax_id` | String | Tax identification number. | Yes |
-| `address` | String | Street address for tax invoice. | Yes |
-| `sub_district` | String | Sub-district of the tax address. | Yes |
-| `district` | String | District of the tax address. | Yes |
-| `province` | String | Province of the tax address. | Yes |
-| `zipcode` | String | Zip code of the tax address. | Yes |
-| `phone_1` | String | Primary contact phone number for tax invoice. | Yes |
-| `phone_2` | String | Secondary contact phone number for tax invoice. | No |
 
 ### Response
 
