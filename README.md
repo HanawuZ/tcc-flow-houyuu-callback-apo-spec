@@ -167,9 +167,70 @@ This API is used to create a new order in the system. It should be called when a
 **Success (201)**
 ```json
 {
-  "error": false,
-  "message": "Order created successfully.",
-  "errors": []
+    "error": false,
+    "message": "Order created successfully.",
+    "errors": [],
+    "data": {
+        "order_no": "TCCT2026040800001",
+        "discount_bill": 0,
+        "benefit_summary": {
+            "total_discount": 6,
+            "total_sku_discount": 6,
+            "coupon_discount": 0,
+            "bill_discount": 0,
+            "promotion_bill_discount": 0,
+            "manual_bill_discount": 0,
+            "campaign_discount": 0,
+            "point_discount": 0,
+            "coin_discount": 0
+        },
+        "promotions": [
+            {
+                "promotion_name": "Point โออิชิ 500",
+                "promotion_code": "TCCT202603-03",
+                "promotion_type": "step_discount",
+                "discount_amount": 6,
+                "point_gain": 0,
+                "coin_gain": 0,
+                "premiums": []
+            },
+            {
+                "promotion_name": "NinEAynGNaซื้อกลุ่มสินค้าแถมpremium",
+                "promotion_code": "TCCT202511-08",
+                "promotion_type": "premium",
+                "discount_amount": 0,
+                "point_gain": 0,
+                "coin_gain": 0,
+                "premiums": [
+                    {
+                        "sku": "TARO10002",
+                        "barcode": "TARO10002",
+                        "title": "TARO10002",
+                        "free_quantity": 1,
+                        "unit_name": "ซองx1"
+                    }
+                ]
+            },
+            {
+                "promotion_name": "Point Zato",
+                "promotion_code": "TCCT202603-04",
+                "promotion_type": "point",
+                "discount_amount": 0,
+                "point_gain": 2,
+                "coin_gain": 0,
+                "premiums": []
+            },
+            {
+                "promotion_name": "NinEAynGNaซื้อกลุ่มสินค้าได้รับคอยน์",
+                "promotion_code": "TCCT202511-07",
+                "promotion_type": "coin",
+                "discount_amount": 0,
+                "point_gain": 0,
+                "coin_gain": 1,
+                "premiums": []
+            }
+        ]
+    }
 }
 ```
 
@@ -367,9 +428,70 @@ This API is used to update an existing order in the system. It allows the caller
 **Success (200)**
 ```json
 {
-  "error": false,
-  "message": "Order updated successfully.",
-  "errors": []
+    "error": false,
+    "message": "Order updated successfully.",
+    "errors": [],
+    "data": {
+        "order_no": "TCCT2026040800001",
+        "discount_bill": 0,
+        "benefit_summary": {
+            "total_discount": 6,
+            "total_sku_discount": 6,
+            "coupon_discount": 0,
+            "bill_discount": 0,
+            "promotion_bill_discount": 0,
+            "manual_bill_discount": 0,
+            "campaign_discount": 0,
+            "point_discount": 0,
+            "coin_discount": 0
+        },
+        "promotions": [
+            {
+                "promotion_name": "Point โออิชิ 500",
+                "promotion_code": "TCCT202603-03",
+                "promotion_type": "step_discount",
+                "discount_amount": 6,
+                "point_gain": 0,
+                "coin_gain": 0,
+                "premiums": []
+            },
+            {
+                "promotion_name": "NinEAynGNaซื้อกลุ่มสินค้าแถมpremium",
+                "promotion_code": "TCCT202511-08",
+                "promotion_type": "premium",
+                "discount_amount": 0,
+                "point_gain": 0,
+                "coin_gain": 0,
+                "premiums": [
+                    {
+                        "sku": "TARO10002",
+                        "barcode": "TARO10002",
+                        "title": "TARO10002",
+                        "free_quantity": 1,
+                        "unit_name": "ซองx1"
+                    }
+                ]
+            },
+            {
+                "promotion_name": "Point Zato",
+                "promotion_code": "TCCT202603-04",
+                "promotion_type": "point",
+                "discount_amount": 0,
+                "point_gain": 2,
+                "coin_gain": 0,
+                "premiums": []
+            },
+            {
+                "promotion_name": "NinEAynGNaซื้อกลุ่มสินค้าได้รับคอยน์",
+                "promotion_code": "TCCT202511-07",
+                "promotion_type": "coin",
+                "discount_amount": 0,
+                "point_gain": 0,
+                "coin_gain": 1,
+                "premiums": []
+            }
+        ]
+    }
 }
 ```
 
